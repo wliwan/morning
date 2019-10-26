@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+		</script>
+
+	</head>
+
+	<body>
+
+		<header class="mui-bar mui-bar-nav mui-block">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">验证&注册</h1>
+		</header>
+		<div class="mui-content" style="background-image:url(src/3a2a1b0f64d9d016421d79e1b463c460.jpg) ;background-position: center center;
+		background-size: cover;
+		background-repeat: no-repeat;" id="IRI_mainView" >
+			<div class="mui-content-padded" style="padding: 10px;padding-top: 30px;">
+				<form id='login-form' class="mui-input-group mui-content-padded ">
+					<div class="mui-input-row ">
+						<label>账号</label>
+						<input id='account' type="text" class="mui-input-clear mui-input" placeholder="工号/域账号">liwan@paxsz.com</input>
+					</div>
+					<div class="mui-input-row">
+						<label>密码</label>
+						<input id='password' type="password" class="mui-input-clear mui-input" placeholder="请输入密码">w2550451498+</input>
+					</div>
+				</form>
+				
+				
+				<div class="mui-content-padded" style="padding-top:30px;">
+					<button id='login' type="button" class="mui-btn mui-btn-block mui-btn-primary">验证&注册</button>
+				</div>
+				
+				<script type="text/javascript">
+					function isEmpty(obj) {
+						if (typeof obj == "undefined" || obj == null || obj == "") {
+							return true;
+						} else {
+							return false;
+						}
+					}
+					// // 请求框架
+					// function post(URL, PARAMS) {
+					// 	var iframe=document.createElement("iframe");
+					//     var temp = document.createElement("form");
+					//     temp.action = URL;
+					//     temp.method = "post";
+					//     temp.style.display = "none";
+					//     for (var x in PARAMS) {
+					//         var opt = document.createElement("textarea");
+					//         opt.name = x;
+					//         opt.value = PARAMS[x];
+					//         temp.appendChild(opt);
+					//     }
+					// 	iframe.appendChild(temp);
+					//     document.body.appendChild(iframe);
+					//     temp.submit();
+					//     return temp;
+					// }
+					// 判断字符是否为空的方法
+				
+					var regButton = document.getElementById('login');
+					var accountBox = document.getElementById('account');
+					var passwordBox = document.getElementById('password');
+					accountBox.value = "liwan@paxsz.com"
+					passwordBox.value = "w2550451498+";
+				
+					regButton.addEventListener('tap', function(event) {
+						var regInfo = {
+							account: accountBox.value,
+							password: passwordBox.value,
+						};
+						if (isEmpty(accountBox.value) || isEmpty(passwordBox.value)) {
+							mui.toast("请先输入必要信息");
+							return;
+						}
+						// var dataStr = {
+						// 	"__VIEWSTATE": "KRQ8NJN4oKw0VjnlFeS4n/yRNN9julFN44JM629gvWxn/Zkgw34ER5ue2wi9wBQYmdJ5Xmd2iYa11/7OGqrfF1rxm6ctJhdq2e8aeC/piSDmvaab9R70AIroVH1qJnbrz9iegVz1NNQMrU5kkG9fPtMfhvy+8bBJ9AR4sVUJAmhpqCzFEnGhDlO8Up+bgz3CJd9vKDLBGopvhhXjxTuGylcVorQFimBXAsrqv3PKNgUCibtKwCEkVsf7Y5U=",
+						// 	"__EVENTVALIDATION": "rP631D5V5yc/9c3TkPZp4EPK0VgEhwEl7dHq2U6ZWxSvEStsEctN2nj0f6elAh4WkHPSildSvWX6iLdtURvu6UgiXJ+QZXcbr/LtW99QLLHjR5xo1dhZfZaGaQUlGpnyw4jt/viO4VDRnTe8u6xRrqorAc81YY6095KJ6mLrOJpheh683dhMxpliIw5Aju3fMCh9zHLT3UDyKHw4YYAlOB16nSw=",
+						// 	"txtUserName": "liwan@paxsz.com",
+						// 	"txtPassword": "w2550451498+",
+						// 	"chkPersist": "on",
+						// 	"lt": "e1s1",
+						// 	"eventId": "submit",
+						// 	"security": "true",
+						// 	"btnLogin": "%B5%C7+%C2%BC"
+						// };
+				
+						// var result = post("https://info.paxsz.com/login.aspx", dataStr);
+						// // result = post("https://info.paxsz.com/PersonOffice/Clock/SelfClock.aspx",dataStr);
+						// mui.toast(result);
+						accountBox.setAttribute("disabled", true);
+						passwordBox.setAttribute("disabled", true);
+						regButton.setAttribute("disabled", true);
+						mui('body').progressbar({
+							progress: undefined
+						}).show();
+						mui.toast("正在验证身份");
+						window.android.Post(accountBox.value, passwordBox.value);
+				
+				
+					});
+				</script>
+				
+				<script type="text/javascript">
+					var regButton = document.getElementById('login');
+					var accountBox = document.getElementById('account');
+					var passwordBox = document.getElementById('password');
+				
+					function resetUi() {
+				
+						accountBox.disabled = false;
+						passwordBox.disabled = false;
+						regButton.disabled = false;
+						mui('body').progressbar({
+							progress: undefined
+						}).hide();
+					}
+				
+					function goBack() {
+						mui.back();
+					}
+				
+					function ShowErr(arg) {
+				
+						mui.alert(arg, '提示', '确定', function(e) {
+							resetUi();
+						}, 'div');
+				
+					}
+				
+					function javacalljswith(arg) {}
+				</script>
+				
+			</div>
+			
+		</div>
+		<script type="text/javascript">
+			document.getElementById("IRI_mainView").style.height = window.innerHeight + "px";
+		</script>
+	</body>
+
+</html>
